@@ -1,0 +1,12 @@
+.task_buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.task_buttons > div {
+    margin-right: 15px; /* Добавить отступ между элементами */
+  }
+
+.task_buttons > div:last-child {
+    margin-right: 0; /* Убрать отступ справа у последнего элемента */
+  }
