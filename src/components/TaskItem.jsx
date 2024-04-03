@@ -1,36 +1,36 @@
-import React from "react";
+//import React from 'react';
 import MyButton from "../UI/button/MyButton";
 import '../styles/TaskItem.css';
-import MyModal from "../UI/modalWindow/MyModal";
-import TaskForm from "./TaskForm";
 
-const TaskItem = (props) =>{
-    if(props.execute){
+const TaskItem = ({setTaskToRedact, execute, remove, number, task, isVisible}) =>{
+
+    if(execute){
         return(
             <div className='task'>
                 <div className='task_content'>
-                    <strong>{props.number}. {props.task.tittle}</strong>
+                    <strong>{number}.  {task.tittle}</strong>
                     <div>
-                        {props.task.body}
+                        {task.body}
                     </div>
                 </div>
 
                 <div className="task_buttons">
                     <div className='task_execute'>
-                        <MyButton onClick = {()=>props.execute(props.task)}>
+                        <MyButton onClick = {() => execute(task)}>
                             Виконати
                         </MyButton>
                     </div>
 
                     <div className='task_redact'>
-                        <MyButton onClick = { () => props.redact(props.task)}>
+                        <MyButton  onClick = {() =>{ setTaskToRedact(task);
+                                                     isVisible(true)  } }>
                             Редагувати
                         </MyButton>
 
                     </div>
 
                     <div className='task_delete'>
-                        <MyButton onClick = {()=>props.remove(props.task)}>
+                        <MyButton onClick = {() => remove(task)}>
                             Видалити
                         </MyButton>
                     </div>
@@ -42,20 +42,14 @@ const TaskItem = (props) =>{
         return (
             <div className='task'>
                 <div className='task_content'>
-                    <strong>{props.number}. {props.task.tittle}</strong>
+                    <strong>{number}. {task.tittle}</strong>
                     <div>
-                        {props.task.body}
+                        {task.body}
                     </div>
                 </div>
                 <div className="task_buttons">
-                    <div className='task_redact'>
-                        <MyButton onClick = { () => props.redact(props.task)}>
-                            Редагувати
-                        </MyButton>
-
-                    </div>
                     <div className='task_delete'>
-                        <MyButton onClick={() => props.remove(props.task)}>
+                        <MyButton onClick={() => remove(task)}>
                             Видалити
                         </MyButton>
                     </div>

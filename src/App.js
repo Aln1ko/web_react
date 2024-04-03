@@ -2,9 +2,9 @@ import './styles/App.css';
 import React, { useState } from 'react';
 import TaskList from './components/TaskList';
 import MyButton from './UI/button/MyButton';
-import MyInput from './UI/input/MyInput';
 import TaskForm from './components/TaskForm';
 import MyModal from './UI/modalWindow/MyModal';
+import TaskRedact from './components/TaskRedact';
 
 
 function App() {
@@ -20,9 +20,11 @@ function App() {
     {id:6, tittle: 'Задача 3',body:'Describtion'}
   ])
 
-  const[modal,setModal] = useState(false);
-  const[redact,setRedact] = useState(false);
+  const[modal, setModal] = useState(false);
+  const[visibleRedact, setVisibleRedact] = useState(false);
 
+  const[taskToRedact, setTaskToRedact] = useState({id:0, tittle: '',
+                                                   body: ''});
 
   const createTask = (newTask) => {
     SetTasks([...tasks,newTask])
@@ -44,10 +46,27 @@ function App() {
     SetTasks2([...tasks2,taskToExecute])
   }
 
-  const redactTask = (task)=>{
-    //const taskToRedact = tasks.find(t => t.id === task.id)
-    setRedact(true)
+  const editTask = (rtask) => {
+    // Создаем новый массив задач с обновленными данными
+    const updatedTasks = tasks.map( task => {
+        if (task.id === rtask.id) {
+             return rtask;
+        }
+        return task;
+    });
+    SetTasks( updatedTasks ) ;
   }
+
+  const ModalRedact = () => {
+    if(!visibleRedact) return null;
+    return(
+        <MyModal modal = {visibleRedact} setVisible={setVisibleRedact}>
+           <TaskRedact editTask = {editTask} taskToRedact = {taskToRedact}
+                       setVisible={setVisibleRedact}></TaskRedact>
+        </MyModal>
+    )
+ }
+
 
   return (
     <div className='App'>
@@ -55,19 +74,17 @@ function App() {
           Додати задачу
         </MyButton>
 
-        <MyModal modal={modal} setVisible = {setModal}>
+        <MyModal  modal={modal} setVisible = {setModal}>
           <TaskForm create = {createTask} modal = {modal}/>
         </MyModal>
 
-        <MyModal modal = {redact} setVisible={setRedact}>
-          <TaskForm create = {redactTask} />
-        </MyModal>
-
+        <ModalRedact />
         {
           tasks.length !== 0 || tasks2.length !== 0 ? (
           <>
             {tasks.length !== 0 && (
-              <TaskList redact ={redactTask} execute = {executeTask} remove = {removeTask} tasks = {tasks} tittle="Активні задачі" />
+              <TaskList  execute = {executeTask} setTaskToRedact = {setTaskToRedact} remove = {removeTask}
+                         tasks = {tasks} tittle="Активні задачі"  isVisible = {setVisibleRedact}/>
             )}
             {tasks2.length !== 0 && (
               <TaskList   remove = {removeTask2} tasks = {tasks2} tittle="Виконані задачі" />
