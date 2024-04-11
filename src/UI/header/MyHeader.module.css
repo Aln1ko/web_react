@@ -1,0 +1,7 @@
+.myhead{
+    background-color: rgb(26, 167, 162);
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+}

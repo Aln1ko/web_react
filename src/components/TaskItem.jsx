@@ -3,7 +3,6 @@ import MyButton from "../UI/button/MyButton";
 import '../styles/TaskItem.css';
 
 const TaskItem = ({setTaskToRedact, execute, remove, number, task, isVisible}) =>{
-
     if(execute){
         return(
             <div className='task'>

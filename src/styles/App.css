@@ -13,6 +13,18 @@
     width: 800px;
 }
 
+.navbar{
+    margin-right: 15px;
+    display:flex;
+
+}
+
+.navbarEl{
+    color:white;
+    margin: 15px;
+    text-decoration: none;
+}
+
 .task{
     display: flex;
     padding:15px;
